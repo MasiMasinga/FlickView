@@ -4,6 +4,9 @@ const helper = require("../../utils/helper");
 const Logout = async (req, res) => {
     try {
         
+        let data = {
+            token: req.body.token,
+        };
 
         const user = authService.Logout(data);
 

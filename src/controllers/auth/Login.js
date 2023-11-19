@@ -7,9 +7,17 @@ const Login = async (req, res) => {
         let data = {
             email: req.body.email,
             password: req.body.password,
+        };
+
+        if (!data.email) {
+            return res.status(400).send({ message: "Email is required" });
+        };
+
+        if (!data.password) {
+            return res.status(400).send({ message: "Password is required" });
         }
 
-        const user = authService.Login(data);
+        const user = await authService.Login(data);
 
         return res.send(user);
     } catch (error) {

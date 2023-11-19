@@ -3,11 +3,11 @@ const prisma = new PrismaClient();
 const dotenv = require("dotenv");
 dotenv.config();
 
-const AddToWatchList = () => {};
+const AddToWatchlist = () => {};
 
-const GetWatchList = () => {};
+const DeleteFromWatchlist = () => {};
 
 module.exports = {
-    AddToWatchList,
-    GetWatchList,
+    AddToWatchlist,
+    DeleteFromWatchlist,
 };

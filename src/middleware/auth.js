@@ -9,7 +9,7 @@ const auth = (req, res, next) => {
 
     if (token == null) return res.sendStatus(401);
 
-    jwt.verify(token, 'Credibox*2023', (err, user) => {
+    jwt.verify(token, 'FlickView*2023', (err, user) => {
         if (err) return res.sendStatus(403);
         req.user = user;
         next();

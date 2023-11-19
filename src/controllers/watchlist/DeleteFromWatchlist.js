@@ -1,11 +1,11 @@
 const watchlistService = require("../../services/watchlist/watchlist.service");
 const helper = require("../../utils/helper");
 
-const GetWatchList = async (req, res) => {
+const DeleteFromWatchlist = async (req, res) => {
     try {
         
 
-        const user = watchlistService.GetWatchList(data);
+        const user = watchlistService.DeleteFromWatchlist(data);
 
         return res.send(user);
     } catch (error) {
@@ -13,4 +13,4 @@ const GetWatchList = async (req, res) => {
     }
 };
 
-module.exports = { GetWatchList };
+module.exports = { DeleteFromWatchlist };
