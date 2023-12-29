@@ -1,11 +1,10 @@
 const movieService = require("../../services/movie/movie.service");
 const helper = require("../../utils/helper");
 
-const GetMovie = async (req, res) => {
+const MovieSuggestion = async (req, res) => {
     try {
-        
 
-        const user = movieService.GetMovie(data);
+        const user = movieService.MovieSuggestion(data);
 
         return res.send(user);
     } catch (error) {
@@ -13,4 +12,4 @@ const GetMovie = async (req, res) => {
     }
 };
 
-module.exports = { GetMovie };
+module.exports = { MovieSuggestion };

@@ -1,44 +1,54 @@
-// const { Configuration, OpenAIApi } = require("openai");
-// require("dotenv").config();
+const { Configuration, OpenAIApi } = require("openai");
+const axios = require("axios");
+const dotenv = require("dotenv");
+dotenv.config();
 
-// const configuration = new Configuration({
-//     apiKey: process.env.OPENAI_API_KEY,
-// });
+const configuration = new Configuration({
+    apiKey: process.env.OPENAI_API_KEY,
+});
 
-// const openai = new OpenAIApi(configuration);
+const openai = new OpenAIApi(configuration);
 
-// app.post("/api", (req, res) => {
-//     const body = `Please recommend a list of movies and tv shows based on 
-//   these last few shows I have watched "${req.body.body}". 
-//   Ensure it's just a ordered list with bullets next to each title, 
-//   with no sub header or title and don't provide any explanations or 
-//   conclusions to the response?`;
+const MovieSuggestion = async (params) => {
+    try {
 
-//     console.log(body);
+        const completion = await openai.chat.completions.create({
+            model: 'gpt-3.5-turbo',
+            messages: [{
+                role: 'user',
+                message: `
+                        Please suggest me some movies to watch, Based on the following movies I have watched:
+                        ${params}
+                    `
+            }]
+        });
 
-//     openai
-//         .createCompletion({
-//             model: "text-davinci-003",
-//             prompt: body,
-//             temperature: 0.8,
-//             max_tokens: 250,
-//             frequency_penalty: 0.7,
-//         })
-//         .then((completion) => {
-//             console.log(completion.data.choices[0].text);
-//             res.send({ data: completion.data.choices[0].text });
-//         })
-//         .catch((err) => {
-//             console.log(err);
-//             res.send({ message: "Unfortunately a Technical Error Occurred" });
-//         });
-// });
+        return resolve({ message: "Movie suggestions generated", suggestions: completion });
 
-const GenerateMovieSuggestions = (params) => { };
+    } catch (error) {
+        return reject(error);
+    }
+};
 
-const GetMovie = (params) => { };
+const SearchMovie = async (params) => {
+    try {
+        const url =
+            `https://api.themoviedb.org/3/search/movie?query=${params}&include_adult=false&language=en-US&page=1`;
+
+        const headers = {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${process.env.TMBD_API_TOKEN}`
+        }
+
+        const response = await axios.get(url, { headers });
+
+        return resolve({ message: "Movie fetched", movie: response.data });
+    } catch (error) {
+        return reject(error);
+    }
+};
 
 module.exports = {
-    GenerateMovieSuggestions,
-    GetMovie
+    MovieSuggestion,
+    SearchMovie
 };

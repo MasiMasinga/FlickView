@@ -4,23 +4,6 @@ const prisma = new PrismaClient()
 async function main() {
     try {
         await prisma.$connect();
-
-        // await prisma.user.create({
-        //     data: {
-        //         first_name: "John",
-        //         email: "john@prisma.io",
-        //         password: "password",
-        //     },
-        // });
-
-        // await prisma.user.create({
-        //     data: {
-        //         first_name: "Sarah",
-        //         email: "sarah@prisma.io",
-        //         password: "password",
-        //     },
-        // });
-
         const users = await prisma.user.findMany();
         console.dir(users, { depth: users });
     } catch (error) {
